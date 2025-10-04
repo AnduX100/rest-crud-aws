@@ -8,9 +8,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   environment:
     TABLE_NAME: ItemsTable-${self:provider.stage}
-  iam:
-    role:
-      statements:
+  iiamRoleStatements:
         - Effect: Allow
           Action:
             - dynamodb:PutItem
@@ -18,8 +16,6 @@ provider:
             - dynamodb:Scan
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
-          Resource:
-            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TABLE_NAME}
 
 functions:
   createItem:
