@@ -57,3 +57,8 @@ functions:
 package:
   individually: true
 
+deploymentBucket:
+  name: serverless-artifacts-678901075164-us-east-1
+  blockPublicAccess: true
+
+
