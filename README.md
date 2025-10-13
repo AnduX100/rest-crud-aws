@@ -1,3 +1,14 @@
+# REST CRUD Serverless on AWS (Node.js + React)
+
+Backend Serverless Framework (API Gateway + Lambda + DynamoDB) y Frontend React (Amplify Hosting) con CI/CD en CodePipeline + CodeBuild para **multi-stage (dev/prod)**.
+
+---
+
+## 📐 Arquitectura
+
+> Diagrama Mermaid
+
+```mermaid
 flowchart LR
   A[GitHub (main)] -- Webhook/App --> P[CodePipeline]
   P -->|Source| S[Source (GitHub)]
@@ -24,6 +35,7 @@ flowchart LR
   G <--> L3
   G <--> L4
   G <--> L5
+
   L1 --> D
   L2 --> D
   L3 --> D
@@ -35,4 +47,3 @@ flowchart LR
   end
 
   R <---> G
-
