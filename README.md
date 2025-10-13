@@ -1,24 +1,38 @@
-# REST CRUD AWS (Serverless + API Gateway + Lambda + DynamoDB + Amplify)
+flowchart LR
+  A[GitHub (main)] -- Webhook/App --> P[CodePipeline]
+  P -->|Source| S[Source (GitHub)]
+  P -->|Stage 1| B1[CodeBuild (STAGE=dev)]
+  P -->|Stage 2| B2[CodeBuild (STAGE=prod)]
 
-Infraestructura con **Serverless Framework** (IaC), CI/CD con **CodePipeline/CodeBuild**, y frontend **React (Vite) + Chakra UI**.
+  subgraph AWS Backend
+    subgraph API
+      G[API Gateway REST]
+      L1[Lambda createItem]
+      L2[Lambda getItem]
+      L3[Lambda listItems]
+      L4[Lambda updateItem]
+      L5[Lambda deleteItem]
+    end
+    D[(DynamoDB\nItemsTable-${stage})]
+  end
 
-## Estructura
-rest-crud-aws/
-├─ backend/ # API + Lambdas + DynamoDB via Serverless
-│ ├─ serverless.yml
-│ ├─ package.json
-│ └─ src/handler.js
-├─ .aws/
-│ └─ buildspec.yml # CodeBuild: despliegue serverless
-├─ frontend/ # UI React
-│ ├─ package.json
-│ ├─ vite.config.js
-│ ├─ index.html
-│ └─ src/
-│ ├─ main.jsx
-│ └─ App.jsx
-└─ README.md
+  B1 -->|serverless deploy --stage dev| API
+  B2 -->|serverless deploy --stage prod| API
 
-## Variables
-- Front: `VITE_API_URL` → URL del Stage `dev` de API Gateway.
+  G <--> L1
+  G <--> L2
+  G <--> L3
+  G <--> L4
+  G <--> L5
+  L1 --> D
+  L2 --> D
+  L3 --> D
+  L4 --> D
+  L5 --> D
+
+  subgraph Frontend
+    R[React App (Amplify)]
+  end
+
+  R <---> G
 
