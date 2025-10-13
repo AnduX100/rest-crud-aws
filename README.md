@@ -10,12 +10,12 @@ Backend Serverless Framework (API Gateway + Lambda + DynamoDB) y Frontend React 
 
 ```mermaid
 flowchart LR
-  A[GitHub (main)] -- Webhook/App --> P[CodePipeline]
+  A[GitHub (main)] -->|Webhook/App| P[CodePipeline]
   P -->|Source| S[Source (GitHub)]
   P -->|Stage 1| B1[CodeBuild (STAGE=dev)]
   P -->|Stage 2| B2[CodeBuild (STAGE=prod)]
 
-  subgraph AWS Backend
+  subgraph "AWS Backend"
     subgraph API
       G[API Gateway REST]
       L1[Lambda createItem]
@@ -24,26 +24,31 @@ flowchart LR
       L4[Lambda updateItem]
       L5[Lambda deleteItem]
     end
-    D[(DynamoDB\nItemsTable-${stage})]
+    D[(DynamoDB<br/>ItemsTable-${stage})]
   end
 
-  B1 -->|serverless deploy --stage dev| API
-  B2 -->|serverless deploy --stage prod| API
+  %% Los builds despliegan hacia el API Gateway (nodo G)
+  B1 -->|serverless deploy --stage dev| G
+  B2 -->|serverless deploy --stage prod| G
 
-  G <--> L1
-  G <--> L2
-  G <--> L3
-  G <--> L4
-  G <--> L5
+  %% Flujo API <-> Lambdas
+  G <-->|REST| L1
+  G <-->|REST| L2
+  G <-->|REST| L3
+  G <-->|REST| L4
+  G <-->|REST| L5
 
+  %% Lambdas -> DynamoDB
   L1 --> D
   L2 --> D
   L3 --> D
   L4 --> D
   L5 --> D
 
+  %% Frontend
   subgraph Frontend
     R[React App (Amplify)]
   end
 
-  R <---> G
+  R <-->|HTTP| G
+
