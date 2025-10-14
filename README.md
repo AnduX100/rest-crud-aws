@@ -1,4 +1,4 @@
-# REST CRUD Serverless on AWS (Node.js + React)
+# REST CRUD Serverless en AWS (Node.js + React)
 
 Backend con **Serverless Framework** (API Gateway + Lambda + DynamoDB) y frontend **React** (hosting en **Amplify**), con **CI/CD** en CodePipeline + CodeBuild para *multi-stage* (**dev/prod**) y despliegue automático por push a `main`.
 
