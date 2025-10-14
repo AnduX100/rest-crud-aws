@@ -20,7 +20,6 @@ CI/CD con **CodePipeline + CodeBuild** (multi-stage **dev/prod**) y despliegue a
 
 ## 🧱 Arquitectura
 
-> Si tu GitHub aún no renderiza Mermaid, deja el bloque tal cual **y además** sube un PNG de respaldo (ver más abajo).
 
 ```mermaid
 flowchart LR
@@ -57,3 +56,4 @@ flowchart LR
 
   %% Frontend
   R[React App (Amplify)] <--> G
+
