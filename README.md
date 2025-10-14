@@ -28,7 +28,8 @@ flowchart LR
   B2[Serverless deploy --stage prod] --> G
 
   R[React App (Amplify)] <--> G
-  service: rest-crud-api
+  
+service: rest-crud-api
 frameworkVersion: '3'
 
 provider:
@@ -111,7 +112,7 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-            version: 0.2
+version: 0.2
 
 env:
   variables:
@@ -137,13 +138,13 @@ phases:
   post_build:
     commands:
       - echo "Build completed on $(date)"
-
-      version: 1
+      
+version: 1
 applications:
   - appRoot: frontend
     env:
       variables:
-        VITE_API_URL: https://<api_id>.execute-api.us-east-1.amazonaws.com/prod
+        VITE_API_URL: https://zl9hibjjmg.execute-api.us-east-1.amazonaws.com/prod
     frontend:
       phases:
         preBuild:
@@ -160,7 +161,8 @@ applications:
       cache:
         paths:
           - node_modules/**/*
-    API=https://<api_id>.execute-api.us-east-1.amazonaws.com/prod
+    
+API="https://zl9hibjjmg.execute-api.us-east-1.amazonaws.com/prod"
 
 # Crear
 curl -i -X POST "$API/items" \
@@ -180,6 +182,7 @@ curl -i -X PUT "$API/items/<id>" \
 
 # Eliminar
 curl -i -X DELETE "$API/items/<id>"
+
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Box, Container, Heading, Stack, Input, Button, SimpleGrid, Text, useToast } from '@chakra-ui/react'
@@ -242,13 +245,18 @@ export default function App() {
     </Container>
   )
 }
+
 # Backend
 cd backend
 npx serverless@3 remove --stage dev
 npx serverless@3 remove --stage prod
 
 # Frontend
-# En Amplify console: App → Actions → Delete app (borra hosting y artefactos)
+# En Amplify: App → Actions → Delete app
+
+
+
+
 
 
 
