@@ -1,16 +1,17 @@
 # REST CRUD Serverless on AWS (Node.js + React)
 
-Backend Serverless Framework (API Gateway + Lambda + DynamoDB) y Frontend React (Amplify Hosting) con CI/CD en CodePipeline + CodeBuild para **multi-stage (dev/prod)**.
+Backend con **Serverless Framework** (API Gateway + Lambda + DynamoDB) y frontend **React** (Amplify Hosting).  
+CI/CD con **GitHub → CodePipeline → CodeBuild** para **multi-stage**: `dev` y `prod`.
 
 ---
 
-## 📐 Arquitectura
+## 🚀 Arquitectura
 
-> Diagrama Mermaid
+> Si tu GitHub no renderiza Mermaid, exporta el gráfico desde https://mermaid.live y súbelo como imagen (ver sección “Capturas”).
 
 ```mermaid
 flowchart LR
-  A[GitHub (main)] -->|Webhook/App| P[CodePipeline]
+  A[GitHub (main)] -->|Webhook| P[CodePipeline]
   P -->|Source| S[Source (GitHub)]
   P -->|Stage 1| B1[CodeBuild (STAGE=dev)]
   P -->|Stage 2| B2[CodeBuild (STAGE=prod)]
@@ -24,31 +25,15 @@ flowchart LR
       L4[Lambda updateItem]
       L5[Lambda deleteItem]
     end
+
+    %% Flujo API -> Lambdas
+    G --> L1 & L2 & L3 & L4 & L5
+
+    %% DynamoDB
     D[(DynamoDB<br/>ItemsTable-${stage})]
+    L1 --> D
+    L2 --> D
+    L3 --> D
+    L4 --> D
+    L5 --> D
   end
-
-  %% Los builds despliegan hacia el API Gateway (nodo G)
-  B1 -->|serverless deploy --stage dev| G
-  B2 -->|serverless deploy --stage prod| G
-
-  %% Flujo API <-> Lambdas
-  G <-->|REST| L1
-  G <-->|REST| L2
-  G <-->|REST| L3
-  G <-->|REST| L4
-  G <-->|REST| L5
-
-  %% Lambdas -> DynamoDB
-  L1 --> D
-  L2 --> D
-  L3 --> D
-  L4 --> D
-  L5 --> D
-
-  %% Frontend
-  subgraph Frontend
-    R[React App (Amplify)]
-  end
-
-  R <-->|HTTP| G
-
