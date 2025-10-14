@@ -2,9 +2,6 @@ version: 1
 
 applications:
   - appRoot: frontend
-    env:
-      variables:
-        VITE_API_URL: https://zl9hibjjmg.execute-api.us-east-1.amazonaws.com/prod
     frontend:
       phases:
         preBuild:
@@ -12,7 +9,6 @@ applications:
             - npm ci --no-audit --no-fund
         build:
           commands:
-            - echo "VITE_API_URL=$VITE_API_URL"
             - npm run build
       artifacts:
         baseDirectory: dist
@@ -21,4 +17,3 @@ applications:
       cache:
         paths:
           - node_modules/**/*
-
