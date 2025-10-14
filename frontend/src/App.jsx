@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Box, Container, Heading, Stack, Input, Button, SimpleGrid, Text, useToast } from '@chakra-ui/react'
 
-const API_BASE = import.meta.env.VITE_API_URL // p.ej. https://xxxx.execute-api.us-east-1.amazonaws.com/dev
+const API_BASE = import.meta.env.VITE_API_URL 
+- const API_BASE = import.meta.env.VITE_API_URL 
++ const API_BASE = import.meta.env.VITE_API_URL 
++ console.log('[APP] API_BASE =', API_BASE)
+
 
 export default function App() {
   const [items, setItems] = useState([])
