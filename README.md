@@ -56,7 +56,7 @@ flowchart LR
 
 ## 🖼️ Capturas (CodePipeline / CodeBuild / API / DynamoDB / Amplify)
 
-> Las imágenes viven en `docs/`. Si cambias nombres, ajusta los paths.
+> Las imágenes viven en `docs/`.
 
 ### Pipeline
 
