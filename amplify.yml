@@ -9,11 +9,11 @@ frontend:
     preBuild:
       commands:
         - cd frontend
-        - npm ci
-        # Útil para verificar que quedó cargada:
+        - npm ci --no-audit --no-fund
         - echo "VITE_API_URL=$VITE_API_URL"
     build:
       commands:
+        - cd frontend
         - npm run build
   artifacts:
     baseDirectory: frontend/dist
@@ -22,3 +22,4 @@ frontend:
   cache:
     paths:
       - frontend/node_modules/**/*
+
