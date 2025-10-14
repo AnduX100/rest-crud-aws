@@ -2,7 +2,7 @@ version: 1
 
 env:
   variables:
-    VITE_API_URL: https://<tu-api-id>.execute-api.us-east-1.amazonaws.com/prod
+    VITE_API_URL: https://zl9hibjjmg.execute-api.us-east-1.amazonaws.com/prod
 
 frontend:
   phases:
