@@ -1,10 +1,17 @@
 version: 1
+
+env:
+  variables:
+    VITE_API_URL: https://<tu-api-id>.execute-api.us-east-1.amazonaws.com/prod
+
 frontend:
   phases:
     preBuild:
       commands:
         - cd frontend
         - npm ci
+        # Útil para verificar que quedó cargada:
+        - echo "VITE_API_URL=$VITE_API_URL"
     build:
       commands:
         - npm run build
@@ -15,4 +22,3 @@ frontend:
   cache:
     paths:
       - frontend/node_modules/**/*
-
