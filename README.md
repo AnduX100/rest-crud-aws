@@ -21,9 +21,8 @@ CI/CD con **CodePipeline + CodeBuild** (multi-stage **dev/prod**) y despliegue a
 ## 🧱 Arquitectura
 
 
-```mermaid
 flowchart LR
-  A[GitHub (main)] -->|Webhook/App| P[CodePipeline]
+  A[GitHub (main)] --> P[CodePipeline]
 
   subgraph Backend (AWS)
     direction TB
@@ -35,14 +34,12 @@ flowchart LR
     L5[Lambda deleteItem]
     D[(DynamoDB: ItemsTable-${stage})]
 
-    %% Flujo API <-> Lambdas
     G <--> L1
     G <--> L2
     G <--> L3
     G <--> L4
     G <--> L5
 
-    %% Lambdas -> DynamoDB
     L1 --> D
     L2 --> D
     L3 --> D
@@ -50,10 +47,7 @@ flowchart LR
     L5 --> D
   end
 
-  %% CI/CD stages
   B1[Serverless deploy --stage dev] --> G
   B2[Serverless deploy --stage prod] --> G
 
-  %% Frontend
   R[React App (Amplify)] <--> G
-
