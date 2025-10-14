@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Container, Heading, Stack, Input, Button, SimpleGrid, Text, useToast } from '@chakra-ui/react'
+import {
+  Box, Container, Heading, Stack, Input, Button,
+  SimpleGrid, Text, useToast
+} from '@chakra-ui/react'
+
 
 const API_BASE = import.meta.env.VITE_API_URL 
-- const API_BASE = import.meta.env.VITE_API_URL 
-+ const API_BASE = import.meta.env.VITE_API_URL 
-+ console.log('[APP] API_BASE =', API_BASE)
-
+console.log('[APP] API_BASE =', API_BASE)
 
 export default function App() {
   const [items, setItems] = useState([])
@@ -32,7 +33,7 @@ export default function App() {
     const val = prompt('Nuevo texto:')
     if (!val) return
     const { data } = await axios.put(`${API_BASE}/items/${id}`, { text: val })
-    setItems(prev => prev.map(i => i.id === id ? data : i))
+    setItems(prev => prev.map(i => (i.id === id ? data : i)))
   }
 
   const deleteItem = async (id) => {
@@ -45,7 +46,11 @@ export default function App() {
       <Heading mb={6} textAlign="center">CRUD Serverless</Heading>
 
       <Stack direction={{ base: 'column', md: 'row' }} gap={3} mb={6}>
-        <Input placeholder="Escribe algo..." value={text} onChange={e => setText(e.target.value)} />
+        <Input
+          placeholder="Escribe algo..."
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
         <Button onClick={createItem}>Agregar</Button>
       </Stack>
 
@@ -55,7 +60,7 @@ export default function App() {
             <Text noOfLines={3}>{it.text}</Text>
             <Stack direction="row" mt={3}>
               <Button size="sm" onClick={() => updateItem(it.id)}>Editar</Button>
-              <Button size="sm" onClick={() => deleteItem(it.id)} variant="outline">Borrar</Button>
+              <Button size="sm" variant="outline" onClick={() => deleteItem(it.id)}>Borrar</Button>
             </Stack>
           </Box>
         ))}
@@ -63,3 +68,4 @@ export default function App() {
     </Container>
   )
 }
+
